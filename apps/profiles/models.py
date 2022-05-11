@@ -15,7 +15,7 @@ class Gender(models.TextChoices):
     OTHER = 'Other', _('other')
 
 
-class Profiles(TimeStampUUIDModel):
+class Profile(TimeStampUUIDModel):
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
     phone_number = PhoneNumberField(verbose_name=_('Phone Number'), max_length=30, default="+989123456789")
     about_me = models.TextField(verbose_name=_('About Me'), default="say something about yourself")

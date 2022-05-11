@@ -1,8 +1,10 @@
 import logging
+
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
 from villaage.settings.base import AUTH_USER_MODEL
-from apps.profiles.models import Profiles
+from apps.profiles.models import Profile
 
 logger = logging.getLogger(__name__)
 
@@ -10,7 +12,7 @@ logger = logging.getLogger(__name__)
 @receiver(post_save, sender=AUTH_USER_MODEL)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        Profiles.objects.create(user=instance)
+        Profile.objects.create(user=instance)
 
 
 @receiver(post_save, sender=AUTH_USER_MODEL)

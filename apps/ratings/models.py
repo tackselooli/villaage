@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from villaage.settings.base import AUTH_USER_MODEL
 from apps.common.models import TimeStampUUIDModel
-from apps.profiles.models import Profiles
+from apps.profiles.models import Profile
 
 
 class Rating(TimeStampUUIDModel):
@@ -20,7 +20,7 @@ class Rating(TimeStampUUIDModel):
         null=True,
     )
     agent = models.ForeignKey(
-        Profiles,
+        Profile,
         verbose_name=_('Agent being rated'),
         related_name= 'agent_review',
         on_delete=models.SET_NULL,

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Profiles
+from .models import Profile
 
 
 class ProfileAdmin(admin.ModelAdmin):
@@ -8,4 +8,4 @@ class ProfileAdmin(admin.ModelAdmin):
     list_display_links = ['id', 'pkid', 'user']
 
 
-admin.site.register(Profiles, ProfileAdmin)
+admin.site.register(Profile, ProfileAdmin)
