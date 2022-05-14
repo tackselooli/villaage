@@ -36,8 +36,8 @@ class Property(TimeStampUUIDModel):
     user = models.ForeignKey(User, verbose_name=_("Agent, Seller or Buyer"), related_name="agent_buyer",
                              on_delete=models.DO_NOTHING)
     title = models.CharField(verbose_name=_("Property Title"), max_length=250)
-    slug = AutoSlugField(populate_from="title", unique=True, always_update=True)
     ref_code = models.CharField(verbose_name=_("Property Reference Code"), max_length=255, unique=True, blank=True)
+    slug = AutoSlugField(populate_from="title", unique=True, always_update=True)
     description = models.TextField(verbose_name=_("Description"), default="default property description...")
     country = CountryField(
         verbose_name=_("Country"),
