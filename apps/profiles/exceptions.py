@@ -1,7 +1,7 @@
 from rest_framework.exceptions import APIException
 
-
 # let's make custom exception handler
+
 
 class ProfileNotFound(APIException):
     status_code = 404

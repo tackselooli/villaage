@@ -7,6 +7,7 @@ from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
+
 from apps.common.models import TimeStampUUIDModel
 
 User = get_user_model()
@@ -15,7 +16,9 @@ User = get_user_model()
 class PropertyPublishedManager(models.Model):
     def get_queryset(self):
         return (
-            super(PropertyPublishedManager, self).get_queryset().filter(published_status=True)
+            super(PropertyPublishedManager, self)
+            .get_queryset()
+            .filter(published_status=True)
         )
 
 
@@ -33,19 +36,32 @@ class Property(TimeStampUUIDModel):
         COMMERCIAL = "Commercial", _("Commercial")
         OTHER = "Other", _("Other")
 
-    user = models.ForeignKey(User, verbose_name=_("Agent, Seller or Buyer"), related_name="agent_buyer",
-                             on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(
+        User,
+        verbose_name=_("Agent, Seller or Buyer"),
+        related_name="agent_buyer",
+        on_delete=models.DO_NOTHING,
+    )
     title = models.CharField(verbose_name=_("Property Title"), max_length=250)
-    ref_code = models.CharField(verbose_name=_("Property Reference Code"), max_length=255, unique=True, blank=True)
+    ref_code = models.CharField(
+        verbose_name=_("Property Reference Code"),
+        max_length=255,
+        unique=True,
+        blank=True,
+    )
     slug = AutoSlugField(populate_from="title", unique=True, always_update=True)
-    description = models.TextField(verbose_name=_("Description"), default="default property description...")
+    description = models.TextField(
+        verbose_name=_("Description"), default="default property description..."
+    )
     country = CountryField(
         verbose_name=_("Country"),
         default="UK",
         blank_label="(select country)",
     )
     city = models.CharField(verbose_name=_("City"), max_length=180, default="LA")
-    postal_code = models.CharField(verbose_name=_("Postal Code"), max_length=100, default="140")
+    postal_code = models.CharField(
+        verbose_name=_("Postal Code"), max_length=100, default="140"
+    )
     street_address = models.CharField(
         verbose_name=_("Street Address"), max_length=150, default="KG8 Avenue"
     )

@@ -30,6 +30,8 @@ RUN apt-get update \
 
 RUN pip3 install --upgrade pip
 
+# RUN pip3 install --upgrade click==8.0.2
+
 COPY ./requirements.txt /app/requirements.txt
 
 RUN pip3 install -r requirements.txt

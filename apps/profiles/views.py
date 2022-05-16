@@ -2,7 +2,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .exceptions import ProfileNotFound, NotYourProfile
+from .exceptions import NotYourProfile, ProfileNotFound
 from .models import Profile
 from .renderers import ProfileJSONRenderer
 from .serializers import ProfileSerializer, UpdateProfileSerializer
@@ -28,7 +28,7 @@ class GetProfileAPIView(APIView):
         user = self.request.user
         user_profile = Profile.objects.get(user=user)
         print(user_profile)
-        serializer = ProfileSerializer(user_profile, context={'request': request})
+        serializer = ProfileSerializer(user_profile, context={"request": request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
@@ -48,7 +48,9 @@ class UpdateProfileAPIView(APIView):
         if user_name != username:
             raise NotYourProfile
         data = request.data
-        serializer = UpdateProfileSerializer(instance=request.user.profile, data = data, partial=True)
+        serializer = UpdateProfileSerializer(
+            instance=request.user.profile, data=data, partial=True
+        )
         serializer.is_valid()
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)

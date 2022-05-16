@@ -5,14 +5,15 @@ from django.utils.translation import gettext_lazy as _
 
 
 class CustomUserManager(BaseUserManager):
-
     def email_validator(self, email):
         try:
             validate_email(email)
         except ValidationError:
             raise ValueError(_("You must provide a valid email address"))
 
-    def create_user(self, username, first_name, last_name, email, password, **extra_field):
+    def create_user(
+        self, username, first_name, last_name, email, password, **extra_field
+    ):
         if not username:
             raise ValueError(_("Users must submit a username"))
 
@@ -26,10 +27,14 @@ class CustomUserManager(BaseUserManager):
             email = self.normalize_email(email)
             self.email_validator(email)
         else:
-            raise ValueError(_('Pls enter valid email address'))
+            raise ValueError(_("Pls enter valid email address"))
 
         user = self.model(
-            username=username, first_name=first_name, last_name=last_name, email=email, **extra_field
+            username=username,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            **extra_field
         )
 
         user.set_password(password)
@@ -38,7 +43,9 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, first_name, last_name, email, password, **extra_field):
+    def create_superuser(
+        self, username, first_name, last_name, email, password, **extra_field
+    ):
         extra_field.setdefault("is_staff", True)
         extra_field.setdefault("is_superuser", True)
         extra_field.setdefault("is_active", True)
@@ -56,8 +63,10 @@ class CustomUserManager(BaseUserManager):
             email = self.normalize_email(email)
             self.email_validator(email)
         else:
-            raise ValueError(_('Pls enter valid email address'))
+            raise ValueError(_("Pls enter valid email address"))
 
-        user = self.create_user(username, first_name, last_name, email, password, **extra_field)
+        user = self.create_user(
+            username, first_name, last_name, email, password, **extra_field
+        )
         user.save(using=self._db)
         return user

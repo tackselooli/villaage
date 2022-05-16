@@ -1,5 +1,4 @@
 from django_countries.serializer_fields import CountryField
-from django_countries.serializers import CountryFieldMixin
 from rest_framework import serializers
 
 from .models import Property, PropertyViews
