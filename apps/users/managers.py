@@ -51,10 +51,10 @@ class CustomUserManager(BaseUserManager):
         extra_field.setdefault("is_active", True)
 
         if extra_field.get("is_staff") is not True:
-            raise ValueError(_("Superusers must have is_staff = true"))
+            raise ValueError(_("Superusers must have is_staff=True"))
 
         if extra_field.get("is_superuser") is not True:
-            raise ValueError(_("Superusers must have is_superuser = true"))
+            raise ValueError(_("Superusers must have is_superuser=True"))
 
         if not password:
             raise ValueError(_("Superusers must have a password"))
