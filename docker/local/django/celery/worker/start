@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -o errexit
+
+set -o nounset
+
+watchmedo auto-restart -d villaage/ -p "*.py" -- celery worker -A villaage --loglevel=info

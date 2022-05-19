@@ -16,6 +16,7 @@ services:
       - .env
     depends_on:
       - postgres-db
+      - redis
     networks:
       - villaage_react
   postgres-db:
@@ -30,6 +31,44 @@ services:
       - POSTGRES_DB=${POSTGRES_DB}
     networks:
       - villaage_react
+
+  redis:
+    image: redis:5-alpine
+    networks:
+      - villaage_react
+
+  celery_worker:
+    build:
+      context: .
+      dockerfile: ./docker/local/django/Dockerfile
+    command: /start-celeryworker
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres-db
+    networks:
+      - villaage_react
+
+  flower:
+    build:
+      context: .
+      dockerfile: ./docker/local/django/Dockerfile
+    command: /start-flower
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    ports:
+      - "5557:5555"
+    depends_on:
+      - redis
+      - postgres-db
+    networks:
+      - villaage_react
+
   nginx:
     restart: always
     depends_on:
